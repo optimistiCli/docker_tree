@@ -111,3 +111,11 @@ ubuntu:22.04: 2022.10.04 23:35:20, 74M
                     └───83163f244422: +2s
                         └─• tesseract:latest,tesseract:2022.12.18.001: +1s
 ```
+
+## TODO
+```
+  -u, --untagged       Show only branches ending with untagged "leaf" images
+  -p, --page           Pipe output to \$PAGER program
+  -P, --page-thru <command>
+                       Pipe output through given command, ex. "less -S"
+```

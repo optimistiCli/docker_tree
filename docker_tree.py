@@ -194,6 +194,13 @@ class Image(object):
     def _has_key(self, a_key):
         return a_key in self.metadata and self.metadata[a_key]
 
+    @staticmethod
+    def _parse_dt(a_str):
+        try:
+            return dt.datetime.strptime(a_str[:-4], '%Y-%m-%dT%H:%M:%S.%f')
+        except ValueError:
+            return dt.datetime.strptime(a_str[:-1], '%Y-%m-%dT%H:%M:%S')
+
     def __init__(self, *, id=None, metadata=None):
         if (not id and not metadata) or (id and metadata):
             raise AppError('Image constructor requires either id or metadata')
@@ -206,7 +213,7 @@ class Image(object):
             else None
         self._hash = int(self.id, base=16)
         self.size = int(self.metadata["Size"])
-        self.ctime = dt.datetime.strptime(self.metadata['Created'][:-4], '%Y-%m-%dT%H:%M:%S.%f')
+        self.ctime = self._parse_dt(self.metadata['Created'])
         self._sorting_str = f'A{",".join(self._sort_tags(self.metadata["RepoTags"]))}' if self.has_tags \
             else f'B{self.ctime.strftime("%Y%m%d%H%M%S%f")}'
 
